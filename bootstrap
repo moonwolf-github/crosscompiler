@@ -1,0 +1,28 @@
+#!/bin/bash
+
+mkdir {download,src,build,cross}
+
+cd download
+wget http://ftp.gnu.org/gnu/binutils/binutils-2.27.tar.bz2
+wget http://gcc.parentingamerica.com/releases/gcc-6.2.0/gcc-6.2.0.tar.bz2
+tar xjf binutils-2.27.tar.bz2 -C ../src
+tar xjf gcc-6.2.0.tar.bz2 -C ../src
+cd ..
+
+. ./enable
+
+cd build
+mkdir build-binutils
+cd build-binutils
+../../src/binutils-2.27/configure --target=$TARGET --prefix="$PREFIX" --with-sysroot --disable-nls --disable-werror
+make
+make install
+cd ..
+
+mkdir build-gcc
+cd build-gcc
+../../src/gcc-6.2.0/configure --target=$TARGET --prefix="$PREFIX" --disable-nls --enable-languages=c,c++ --without-headers
+make all-gcc
+make all-target-libgcc
+make install-gcc
+make install-target-libgcc
