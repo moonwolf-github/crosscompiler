@@ -1,5 +1,7 @@
 #!/bin/bash
 
+sudo dnf install gmp-devel mpfr-devel isl-devel cloog-devel libmpc-devel
+
 mkdir {download,src,build,cross}
 
 cd download
